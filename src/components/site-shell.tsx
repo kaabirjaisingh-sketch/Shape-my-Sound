@@ -15,7 +15,6 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const links = [
-    { label: "How it works", to: "/", hash: "how" },
     { label: "Science", to: "/science" },
     { label: "Parents", to: "/parents" },
     { label: "NGOs", to: "/resources" },
@@ -25,8 +24,9 @@ export function SiteHeader() {
       <div className="page-shell flex h-20 items-center justify-between gap-5">
         <Logo />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+          <a href="/#how" className="nav-link">How it works</a>
           {links.map((item) => (
-            <Link key={item.label} to={item.to} hash={"hash" in item ? item.hash : undefined} className="nav-link">
+            <Link key={item.label} to={item.to} className="nav-link">
               {item.label}
             </Link>
           ))}
@@ -46,7 +46,8 @@ export function SiteHeader() {
       </div>
       {open && (
         <nav className="page-shell grid gap-2 border-t border-border py-4 md:hidden" aria-label="Mobile navigation">
-          {links.map((item) => <Link key={item.label} to={item.to} hash={"hash" in item ? item.hash : undefined} onClick={() => setOpen(false)} className="mobile-link">{item.label}</Link>)}
+          <a href="/#how" className="mobile-link">How it works</a>
+          {links.map((item) => <Link key={item.label} to={item.to} onClick={() => setOpen(false)} className="mobile-link">{item.label}</Link>)}
           <Link to="/practice" className="button button-sun mt-2">Try a demo</Link>
         </nav>
       )}
@@ -60,8 +61,8 @@ export function SiteFooter() {
     <footer className="bg-footer text-footer-foreground">
       <div className="page-shell grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div><Logo /><p className="mt-5 max-w-xs text-sm leading-7 text-footer-muted">A calm, multisensory world where children ages 6–12 build communication confidence through sound, shape, and movement.</p></div>
-        <FooterGroup title="Explore"><Link to="/" hash="how">How it works</Link><Link to="/science">Science</Link><Link to="/parents">Parent dashboard</Link></FooterGroup>
-        <FooterGroup title="Support"><Link to="/resources">Resources</Link><Link to="/resources">NGOs</Link><Link to="/" hash="partner">Partner with us</Link></FooterGroup>
+        <FooterGroup title="Explore"><a href="/#how">How it works</a><Link to="/science">Science</Link><Link to="/parents">Parent dashboard</Link></FooterGroup>
+        <FooterGroup title="Support"><Link to="/resources">Resources</Link><Link to="/resources">NGOs</Link><a href="/#partner">Partner with us</a></FooterGroup>
         <FooterGroup title="Session"><button onClick={() => navigate({ to: "/login" })} className="footer-logout"><LogOut size={16}/> Log out</button></FooterGroup>
       </div>
       <div className="border-t border-footer-border"><div className="page-shell flex flex-col justify-between gap-2 py-6 text-xs text-footer-muted sm:flex-row"><span>© 2026 Shape My Sound. A demonstration build.</span><span>Made with care for every young voice.</span></div></div>
