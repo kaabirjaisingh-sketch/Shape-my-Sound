@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ParentsRouteImport } from './routes/parents'
+import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ScienceRouteImport } from './routes/science'
 
@@ -30,6 +31,11 @@ const ParentsRoute = ParentsRouteImport.update({
   path: '/parents',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PracticeRoute = PracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
+  '/practice': typeof PracticeRoute
   '/resources': typeof ResourcesRoute
   '/science': typeof ScienceRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
+  '/practice': typeof PracticeRoute
   '/resources': typeof ResourcesRoute
   '/science': typeof ScienceRoute
 }
@@ -60,21 +68,31 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
+  '/practice': typeof PracticeRoute
   '/resources': typeof ResourcesRoute
   '/science': typeof ScienceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/parents' | '/resources' | '/science'
+  fullPaths:
+    '/' | '/login' | '/parents' | '/practice' | '/resources' | '/science'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/parents' | '/resources' | '/science'
-  id: '__root__' | '/' | '/login' | '/parents' | '/resources' | '/science'
+  to: '/' | '/login' | '/parents' | '/practice' | '/resources' | '/science'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/parents'
+    | '/practice'
+    | '/resources'
+    | '/science'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   ParentsRoute: typeof ParentsRoute
+  PracticeRoute: typeof PracticeRoute
   ResourcesRoute: typeof ResourcesRoute
   ScienceRoute: typeof ScienceRoute
 }
@@ -102,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ParentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resources': {
       id: '/resources'
       path: '/resources'
@@ -123,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   ParentsRoute: ParentsRoute,
+  PracticeRoute: PracticeRoute,
   ResourcesRoute: ResourcesRoute,
   ScienceRoute: ScienceRoute,
 }
