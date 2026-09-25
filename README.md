@@ -1,6 +1,6 @@
 # Sound Shape Studio
 
-https://shape-my-sound.vercel.app this is the website we need to  make just like this with the features it have like just the ui like this there is no backend in this rn so leave that no worries  okay just make this website okay ?? no backend as there is no code available for this os thats why I need your help
+https://shape-my-sound.vercel.app this is the website we need to make just like this with the features it have like just the ui like this there is no backend in this rn so leave that no worries okay just make this website okay ?? no backend as there is no code available for this os thats why I need your help
 
 This project was built with [Lovable](https://lovable.dev).
 
