@@ -1,5 +1,7 @@
 import {
+  arrayUnion,
   doc,
+  increment,
   onSnapshot,
   serverTimestamp,
   setDoc,
@@ -17,6 +19,7 @@ export type BadgeId = (typeof BADGE_IDS)[number];
 export type Progress = {
   points: number;
   activitiesCompleted: number;
+  completedActivities: string[];
   badges: string[];
   roundedCorrect: number;
   roundedTotal: number;
@@ -31,6 +34,7 @@ export type Progress = {
 export const DEFAULT_PROGRESS: Progress = {
   points: 0,
   activitiesCompleted: 0,
+  completedActivities: [],
   badges: [],
   roundedCorrect: 0,
   roundedTotal: 0,
@@ -41,14 +45,6 @@ export const DEFAULT_PROGRESS: Progress = {
   streakDays: 0,
   lastPracticedAt: null,
 };
-
-const BADGE_THRESHOLDS: Array<{ id: BadgeId; points: number }> = [
-  { id: "badge_1", points: 20 },
-  { id: "badge_2", points: 40 },
-  { id: "badge_3", points: 60 },
-  { id: "badge_4", points: 80 },
-  { id: "badge_5", points: 100 },
-];
 
 function isSameDay(a: Date, b: Date) {
   return a.toDateString() === b.toDateString();
@@ -71,39 +67,60 @@ function nextStreak(previous: Progress): number {
 
 export function watchProgress(uid: string, onChange: (progress: Progress) => void): Unsubscribe {
   return onSnapshot(doc(db, "progress", uid), (snapshot) => {
-    onChange(snapshot.exists() ? (snapshot.data() as Progress) : DEFAULT_PROGRESS);
+    onChange(
+      snapshot.exists()
+        ? { ...DEFAULT_PROGRESS, ...(snapshot.data() as Partial<Progress>) }
+        : DEFAULT_PROGRESS,
+    );
   });
 }
 
+export const POINTS_PER_CORRECT = 10;
+export const POINTS_PER_ACTIVITY = 20;
+
+// Counters use Firestore increments so quick taps never overwrite each other.
+// Story answers pass a null category: they earn points but are not sound practice.
 export async function recordAnswer(
   uid: string,
   current: Progress,
-  category: SoundCategory,
+  category: SoundCategory | null,
   correct: boolean,
-): Promise<Progress> {
-  const totalKey = `${category}Total` as const;
-  const correctKey = `${category}Correct` as const;
-  const points = current.points + (correct ? 10 : 0);
-  const badges = [
-    ...current.badges,
-    ...BADGE_THRESHOLDS.filter((b) => points >= b.points && !current.badges.includes(b.id)).map(
-      (b) => b.id,
-    ),
-  ];
+) {
+  await setDoc(
+    doc(db, "progress", uid),
+    {
+      points: increment(correct ? POINTS_PER_CORRECT : 0),
+      ...(category
+        ? {
+            [`${category}Total`]: increment(1),
+            [`${category}Correct`]: increment(correct ? 1 : 0),
+          }
+        : {}),
+      streakDays: nextStreak(current),
+      lastPracticedAt: serverTimestamp(),
+    },
+    { merge: true },
+  );
+}
 
-  const updated: Progress = {
-    ...current,
-    points,
-    activitiesCompleted: current.activitiesCompleted + 1,
-    badges,
-    [totalKey]: current[totalKey] + 1,
-    [correctKey]: current[correctKey] + (correct ? 1 : 0),
-    streakDays: nextStreak(current),
-    lastPracticedAt: Timestamp.now(),
-  };
-
-  await setDoc(doc(db, "progress", uid), { ...updated, lastPracticedAt: serverTimestamp() });
-  return updated;
+export async function completeActivity(
+  uid: string,
+  current: Progress,
+  activityId: string,
+  badge?: BadgeId,
+) {
+  await setDoc(
+    doc(db, "progress", uid),
+    {
+      points: increment(POINTS_PER_ACTIVITY),
+      activitiesCompleted: increment(1),
+      completedActivities: arrayUnion(activityId),
+      ...(badge ? { badges: arrayUnion(badge) } : {}),
+      streakDays: nextStreak(current),
+      lastPracticedAt: serverTimestamp(),
+    },
+    { merge: true },
+  );
 }
 
 export function useProgress(uid: string | undefined) {

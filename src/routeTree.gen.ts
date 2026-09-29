@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FounderRouteImport } from './routes/founder'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ParentsRouteImport } from './routes/parents'
 import { Route as PracticeRouteImport } from './routes/practice'
@@ -19,6 +20,11 @@ import { Route as ScienceRouteImport } from './routes/science'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FounderRoute = FounderRouteImport.update({
+  id: '/founder',
+  path: '/founder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -49,6 +55,7 @@ const ScienceRoute = ScienceRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/founder': typeof FounderRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
   '/practice': typeof PracticeRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/founder': typeof FounderRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
   '/practice': typeof PracticeRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/founder': typeof FounderRoute
   '/login': typeof LoginRoute
   '/parents': typeof ParentsRoute
   '/practice': typeof PracticeRoute
@@ -75,12 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/login' | '/parents' | '/practice' | '/resources' | '/science'
+    | '/'
+    | '/founder'
+    | '/login'
+    | '/parents'
+    | '/practice'
+    | '/resources'
+    | '/science'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/parents' | '/practice' | '/resources' | '/science'
+  to:
+    | '/'
+    | '/founder'
+    | '/login'
+    | '/parents'
+    | '/practice'
+    | '/resources'
+    | '/science'
   id:
     | '__root__'
     | '/'
+    | '/founder'
     | '/login'
     | '/parents'
     | '/practice'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FounderRoute: typeof FounderRoute
   LoginRoute: typeof LoginRoute
   ParentsRoute: typeof ParentsRoute
   PracticeRoute: typeof PracticeRoute
@@ -104,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/founder': {
+      id: '/founder'
+      path: '/founder'
+      fullPath: '/founder'
+      preLoaderRoute: typeof FounderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -146,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FounderRoute: FounderRoute,
   LoginRoute: LoginRoute,
   ParentsRoute: ParentsRoute,
   PracticeRoute: PracticeRoute,

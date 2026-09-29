@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { signOut } from "firebase/auth";
 import { LogOut, Menu, X } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../lib/auth-context";
 import { auth } from "../lib/firebase";
@@ -47,6 +47,7 @@ export function SiteHeader() {
     { label: t("common.nav_science"), to: "/science" },
     { label: t("common.nav_parents"), to: "/parents" },
     { label: t("common.nav_ngos"), to: "/resources" },
+    { label: t("common.nav_founder"), to: "/founder" },
   ] as const;
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur">
@@ -140,6 +141,7 @@ export function SiteFooter() {
           <a href="/#how">{t("common.nav_how")}</a>
           <Link to="/science">{t("common.nav_science")}</Link>
           <Link to="/parents">{t("common.footer_parent_dashboard")}</Link>
+          <Link to="/founder">{t("common.nav_founder")}</Link>
         </FooterGroup>
         <FooterGroup title={t("common.footer_support")}>
           <Link to="/resources">{t("common.footer_resources")}</Link>
@@ -218,23 +220,4 @@ export function Mascot({
       <span className="smile" />
     </div>
   );
-}
-
-export function useTone() {
-  const [supported, setSupported] = useState(false);
-  useEffect(() => setSupported(typeof window !== "undefined" && Boolean(window.AudioContext)), []);
-  return () => {
-    if (!supported) return;
-    const context = new AudioContext();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(220, context.currentTime);
-    gain.gain.setValueAtTime(0.18, context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.9);
-    oscillator.connect(gain);
-    gain.connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + 0.9);
-  };
 }

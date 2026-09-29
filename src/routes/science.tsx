@@ -6,12 +6,12 @@ import { Eyebrow, Mascot, Page } from "../components/site-shell";
 export const Route = createFileRoute("/science")({
   head: () => ({
     meta: [
-      { title: "The Science — Shape My Sound" },
+      { title: "The Science | Shape My Sound" },
       {
         name: "description",
         content: "Discover how sound, shape, and movement support confident expression.",
       },
-      { property: "og:title", content: "The Science — Shape My Sound" },
+      { property: "og:title", content: "The Science | Shape My Sound" },
       {
         property: "og:description",
         content: "Discover how multisensory play supports young voices.",

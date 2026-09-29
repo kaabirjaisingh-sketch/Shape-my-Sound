@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { auth } from "./firebase";
@@ -24,10 +24,13 @@ export function useAuth() {
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/login" });
-  }, [loading, user, navigate]);
+    // The pathname changes to /login while this page is still unmounting; skip that.
+    if (!loading && !user && pathname !== "/login")
+      navigate({ to: "/login", search: { redirect: pathname } });
+  }, [loading, user, navigate, pathname]);
 
   if (loading || !user) return null;
   return <>{children}</>;

@@ -9,12 +9,12 @@ import { db } from "../lib/firebase";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Shape My Sound — Speech Practice Through Play" },
+      { title: "Shape My Sound | Speech Practice Through Play" },
       {
         name: "description",
         content: "A calm, multisensory world where children build communication confidence.",
       },
-      { property: "og:title", content: "Shape My Sound — Speech Practice Through Play" },
+      { property: "og:title", content: "Shape My Sound | Speech Practice Through Play" },
       {
         property: "og:description",
         content: "Every sound has a shape, and every child has a voice.",
@@ -29,11 +29,15 @@ export const Route = createFileRoute("/")({
 function Home() {
   const { t } = useTranslation();
   const [sent, setSent] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [pending, setPending] = useState(false);
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Keep the form element: React clears e.currentTarget once the handler awaits.
+    const form = e.currentTarget;
     setPending(true);
-    const data = new FormData(e.currentTarget);
+    setFailed(false);
+    const data = new FormData(form);
     try {
       await addDoc(collection(db, "partnerRequests"), {
         name: data.get("name"),
@@ -43,7 +47,9 @@ function Home() {
         createdAt: serverTimestamp(),
       });
       setSent(true);
-      e.currentTarget.reset();
+      form.reset();
+    } catch {
+      setFailed(true);
     } finally {
       setPending(false);
     }
@@ -56,9 +62,9 @@ function Home() {
   ];
 
   const metrics: Array<[string, string]> = [
-    ["11,882+", t("home.metrics_sessions")],
-    ["93%", t("home.metrics_confident")],
-    ["40+", t("home.metrics_partners")],
+    ["5", t("home.metrics_modules")],
+    ["10", t("home.metrics_activities")],
+    ["5", t("home.metrics_badges")],
     ["3", t("home.metrics_languages")],
   ];
 
@@ -142,6 +148,7 @@ function Home() {
       <section className="band">
         <div className="page-shell split parent-preview">
           <div className="mini-dashboard">
+            <span className="sample-tag">{t("home.mini_example")}</span>
             <div className="confidence-ring mini">
               <strong>65%</strong>
               <span>{t("home.mini_confidence")}</span>
@@ -202,7 +209,9 @@ function Home() {
             <button className="button button-sun" type="submit" disabled={pending}>
               {pending ? t("home.form_sending") : t("home.form_submit")}
             </button>
-            <small>{sent ? t("home.form_sent") : t("home.form_note")}</small>
+            <small role="status">
+              {failed ? t("home.form_error") : sent ? t("home.form_sent") : t("home.form_note")}
+            </small>
           </form>
         </div>
       </section>

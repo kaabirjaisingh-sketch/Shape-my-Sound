@@ -8,9 +8,9 @@ import { useProgress } from "../lib/progress";
 export const Route = createFileRoute("/parents")({
   head: () => ({
     meta: [
-      { title: "Parent Dashboard — Shape My Sound" },
+      { title: "Parent Dashboard | Shape My Sound" },
       { name: "description", content: "A dashboard for tracking speech-practice confidence." },
-      { property: "og:title", content: "Parent Dashboard — Shape My Sound" },
+      { property: "og:title", content: "Parent Dashboard | Shape My Sound" },
       {
         property: "og:description",
         content: "See a clear, encouraging picture of a child's practice journey.",

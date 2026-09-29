@@ -7,12 +7,12 @@ import { Eyebrow, Page } from "../components/site-shell";
 export const Route = createFileRoute("/resources")({
   head: () => ({
     meta: [
-      { title: "Resources — Shape My Sound" },
+      { title: "Resources | Shape My Sound" },
       {
         name: "description",
         content: "Calm, practical guidance for parents, teachers, and organizations.",
       },
-      { property: "og:title", content: "Resources — Shape My Sound" },
+      { property: "og:title", content: "Resources | Shape My Sound" },
       { property: "og:description", content: "Support for everyone helping a young voice grow." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
