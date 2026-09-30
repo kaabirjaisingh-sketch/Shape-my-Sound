@@ -152,6 +152,13 @@ footer a:hover {
   border: 1px solid var(--border);
   background: var(--card);
 }
+/* The menu button is only for phones and tablets; wide screens show the full nav.
+   (This rule overrides the lg:hidden utility, which .icon-button's display beats.) */
+@media (min-width: 64rem) {
+  .icon-button {
+    display: none;
+  }
+}
 .mobile-link {
   padding: 10px 4px;
   font-weight: 700;
