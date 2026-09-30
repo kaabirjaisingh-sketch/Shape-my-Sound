@@ -47,13 +47,15 @@ export function SiteHeader() {
     { label: t("common.nav_science"), to: "/science" },
     { label: t("common.nav_parents"), to: "/parents" },
     { label: t("common.nav_ngos"), to: "/resources" },
-    { label: t("common.nav_founder"), to: "/founder" },
   ] as const;
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur">
       <div className="page-shell flex h-20 items-center justify-between gap-5">
         <Logo />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+          <Link to="/founder" className="nav-link">
+            {t("common.nav_founder")}
+          </Link>
           <a href="/#how" className="nav-link">
             {t("common.nav_how")}
           </a>
@@ -91,6 +93,9 @@ export function SiteHeader() {
           className="page-shell grid gap-2 border-t border-border py-4 lg:hidden"
           aria-label="Mobile navigation"
         >
+          <Link to="/founder" onClick={() => setOpen(false)} className="mobile-link">
+            {t("common.nav_founder")}
+          </Link>
           <a href="/#how" className="mobile-link">
             {t("common.nav_how")}
           </a>
@@ -138,10 +143,10 @@ export function SiteFooter() {
           </p>
         </div>
         <FooterGroup title={t("common.footer_explore")}>
+          <Link to="/founder">{t("common.nav_founder")}</Link>
           <a href="/#how">{t("common.nav_how")}</a>
           <Link to="/science">{t("common.nav_science")}</Link>
           <Link to="/parents">{t("common.footer_parent_dashboard")}</Link>
-          <Link to="/founder">{t("common.nav_founder")}</Link>
         </FooterGroup>
         <FooterGroup title={t("common.footer_support")}>
           <Link to="/resources">{t("common.footer_resources")}</Link>

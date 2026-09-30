@@ -27,26 +27,30 @@ function FounderPage() {
 
   return (
     <Page>
-      <section className="page-hero">
+      <section className="page-hero founder-hero">
         <Eyebrow>{t("founder.eyebrow")}</Eyebrow>
         <h1>{t("founder.title")}</h1>
-        <figure className="founder-portrait">
-          <img
-            src="/kaabir-jaisingh.jpg"
-            alt={t("founder.portrait_alt")}
-            width={853}
-            height={1280}
-          />
-        </figure>
       </section>
 
-      <section className="page-shell founder-story">
-        <article>
-          <h2>{t("founder.meet_title")}</h2>
-          <p>{t("founder.meet_copy1")}</p>
-          <p>{t("founder.meet_copy2")}</p>
-          <p>{t("founder.meet_copy3")}</p>
-          <figure className="founder-stage">
+      <section className="page-shell founder-rows">
+        <article className="founder-row">
+          <figure className="founder-photo founder-portrait">
+            <img
+              src="/kaabir-jaisingh.jpg"
+              alt={t("founder.portrait_alt")}
+              width={853}
+              height={1280}
+            />
+          </figure>
+          <div className="founder-text">
+            <h2>{t("founder.meet_title")}</h2>
+            <p>{t("founder.meet_copy1")}</p>
+            <p>{t("founder.meet_copy2")}</p>
+          </div>
+        </article>
+
+        <article className="founder-row">
+          <figure className="founder-photo">
             <img
               src="/kaabir-tedx.jpg"
               alt={t("founder.tedx_alt")}
@@ -56,8 +60,14 @@ function FounderPage() {
             />
             <figcaption>{t("founder.tedx_caption")}</figcaption>
           </figure>
+          <div className="founder-text">
+            <h2>{t("founder.tedx_title")}</h2>
+            <p>{t("founder.meet_copy3")}</p>
+          </div>
         </article>
+      </section>
 
+      <section className="page-shell founder-story">
         <article>
           <h2>{t("founder.began_title")}</h2>
           <p>{t("founder.began_copy1")}</p>
@@ -74,7 +84,7 @@ function FounderPage() {
       </section>
 
       <section className="section page-shell text-center">
-        <div className="cta-strip">
+        <div className="cta-strip founder-cta">
           <h2>{t("founder.cta_title")}</h2>
           <Link to="/practice" className="button button-sun">
             {t("founder.cta_button")}
