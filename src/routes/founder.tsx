@@ -84,10 +84,10 @@ function FounderPage() {
         <article className="founder-row">
           <figure className="founder-photo founder-portrait">
             <img
-              src="/kaabir-young-speaker.jpg"
+              src="/kaabir-young-speaker-cropped.jpg"
               alt={t("founder.young_alt")}
-              width={720}
-              height={1280}
+              width={454}
+              height={686}
               loading="lazy"
             />
           </figure>
