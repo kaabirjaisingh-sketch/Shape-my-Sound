@@ -543,14 +543,13 @@ footer a:hover {
   background: oklch(0.9 0.045 60);
   color: oklch(0.45 0.11 45);
 }
-/* Founder page headings use Chewy, a bold, bouncy display font. */
+/* Founder page headings use the same reading font as the descriptions, in bold. */
 .founder-hero h1,
 .founder-rows h2,
 .founder-story h2,
 .founder-cta h2 {
-  font-family: "Chewy", var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-family: var(--font-sans);
+  font-weight: 700;
 }
 .founder-hero h1 {
   font-size: clamp(2.8rem, 6vw, 4.6rem);
