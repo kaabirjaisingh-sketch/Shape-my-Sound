@@ -53,7 +53,7 @@ function FounderPage() {
           </div>
         </article>
 
-        <article className="founder-row">
+        <article className="founder-row founder-row-reverse">
           <figure className="founder-photo">
             <div className="founder-video">
               <iframe
@@ -80,16 +80,27 @@ function FounderPage() {
             </a>
           </div>
         </article>
+
+        <article className="founder-row">
+          <figure className="founder-photo founder-portrait">
+            <img
+              src="/kaabir-young-speaker.jpg"
+              alt={t("founder.young_alt")}
+              width={720}
+              height={1280}
+              loading="lazy"
+            />
+          </figure>
+          <div className="founder-text">
+            <h2>{t("founder.began_title")}</h2>
+            <p>{t("founder.began_copy1")}</p>
+            <p>{t("founder.began_copy2")}</p>
+            <blockquote>{t("founder.question")}</blockquote>
+          </div>
+        </article>
       </section>
 
       <section className="page-shell founder-story">
-        <article>
-          <h2>{t("founder.began_title")}</h2>
-          <p>{t("founder.began_copy1")}</p>
-          <p>{t("founder.began_copy2")}</p>
-          <blockquote>{t("founder.question")}</blockquote>
-        </article>
-
         <article>
           <h2>{t("founder.idea_title")}</h2>
           <p>{t("founder.idea_copy1")}</p>
