@@ -1,6 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Play } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Eyebrow, Page } from "../components/site-shell";
+
+// Kaabir's TEDxYouth@OIS talk on the official TEDx Talks channel.
+const TEDX_VIDEO_ID = "nwDDuVrZL0w";
 
 export const Route = createFileRoute("/founder")({
   head: () => ({
@@ -51,18 +55,29 @@ function FounderPage() {
 
         <article className="founder-row">
           <figure className="founder-photo">
-            <img
-              src="/kaabir-tedx.jpg"
-              alt={t("founder.tedx_alt")}
-              width={890}
-              height={490}
-              loading="lazy"
-            />
+            <div className="founder-video">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${TEDX_VIDEO_ID}`}
+                title={t("founder.tedx_alt")}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
             <figcaption>{t("founder.tedx_caption")}</figcaption>
           </figure>
           <div className="founder-text">
             <h2>{t("founder.tedx_title")}</h2>
             <p>{t("founder.meet_copy3")}</p>
+            <a
+              className="founder-watch"
+              href={`https://www.youtube.com/watch?v=${TEDX_VIDEO_ID}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Play size={18} /> {t("founder.tedx_watch")}
+            </a>
           </div>
         </article>
       </section>
