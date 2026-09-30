@@ -543,12 +543,12 @@ footer a:hover {
   background: oklch(0.9 0.045 60);
   color: oklch(0.45 0.11 45);
 }
-/* Founder page headings use the same reading font as the descriptions, in bold. */
+/* Founder page headings match the homepage heading: Fredoka in bold. */
 .founder-hero h1,
 .founder-rows h2,
 .founder-story h2,
 .founder-cta h2 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
   font-weight: 700;
 }
 .founder-hero h1 {
